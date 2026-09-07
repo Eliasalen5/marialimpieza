@@ -5,7 +5,7 @@ service cloud.firestore {
     // AQUÍ pega el UID del usuario administrador
     // (Consola Firebase > Authentication > tu usuario > UID)
     function esAdmin() {
-      return request.auth != null && request.auth.uid == 'PEGA_TU_UID_ADMIN';
+      return request.auth != null && request.auth.uid == '9psM4IG12TeLTaTL1FHiP9Z2OTv2';
     }
 
     match /productos/{id} {
