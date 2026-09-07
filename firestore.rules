@@ -1,0 +1,18 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // AQUÍ pega el UID del usuario administrador
+    // (Consola Firebase > Authentication > tu usuario > UID)
+    function esAdmin() {
+      return request.auth != null && request.auth.uid == 'PEGA_TU_UID_ADMIN';
+    }
+
+    match /productos/{id} {
+      // Lectura pública para el catálogo
+      allow read: if true;
+      // Escritura solo del admin
+      allow create, update, delete: if esAdmin();
+    }
+  }
+}

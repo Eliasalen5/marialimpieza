@@ -1,69 +1,71 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { suscribirProductos } from "@/lib/products";
+import type { Producto } from "@/lib/types";
+import { formatearPrecio } from "@/lib/formato";
+
+export default function Catalogo() {
+  const [productos, setProductos] = useState<Producto[]>([]);
+  const [cargando, setCargando] = useState(true);
+
+  useEffect(() => {
+    const desuscribir = suscribirProductos(true, (lista) => {
+      setProductos(lista);
+      setCargando(false);
+    });
+    return desuscribir;
+  }, []);
+
+  if (cargando) {
+    return <div className="cargando">Cargando catálogo…</div>;
+  }
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="contenedor">
+      <div className="pagina-titulo">
+        <div>
+          <h1>Catálogo</h1>
+          <p className="subtitulo">Productos disponibles</p>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+
+      {productos.length === 0 ? (
+        <div className="sin-productos">
+          Todavía no hay productos publicados. Vuelve pronto.
         </div>
-      </main>
+      ) : (
+        <div className="rejilla-productos">
+          {productos.map((p) => (
+            <article className="tarjeta-producto" key={p.id}>
+              {p.imagenUrl ? (
+                <Image
+                  className="imagen"
+                  src={p.imagenUrl}
+                  alt={p.nombre}
+                  width={400}
+                  height={400}
+                />
+              ) : (
+                <div className="imagen" style={{ background: "var(--fondo)" }} />
+              )}
+              <div className="info">
+                <h3>{p.nombre}</h3>
+                {p.descripcion && <p className="descripcion">{p.descripcion}</p>}
+                <div className="precio">{formatearPrecio(p.precio)}</div>
+                {p.stock > 0 ? (
+                  <span className="etiqueta-stock disponible">
+                    En stock ({p.stock})
+                  </span>
+                ) : (
+                  <span className="etiqueta-stock agotado">Agotado</span>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

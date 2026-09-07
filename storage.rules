@@ -1,0 +1,12 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /productos/{ruta=**} {
+      // Imágenes de productos: lectura pública (catálogo)
+      allow read: if true;
+      // Subida solo de usuarios logueados
+      allow write: if request.auth != null;
+    }
+  }
+}
