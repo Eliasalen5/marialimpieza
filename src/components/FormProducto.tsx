@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { crearProducto, actualizarProducto, subirImagen, nuevoProductoDatos } from "@/lib/products";
-import type { Producto } from "@/lib/types";
+import { suscribirCategorias } from "@/lib/categories";
+import type { Categoria, Producto } from "@/lib/types";
 
 interface Props {
   producto?: Producto;
@@ -13,8 +14,10 @@ export default function FormProducto({ producto }: Props) {
   const router = useRouter();
   const editando = Boolean(producto);
 
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [nombre, setNombre] = useState(producto?.nombre ?? "");
   const [codigo, setCodigo] = useState(producto?.codigo ?? "");
+  const [categoriaId, setCategoriaId] = useState(producto?.categoriaId ?? "");
   const [descripcion, setDescripcion] = useState(producto?.descripcion ?? "");
   const [precio, setPrecio] = useState(producto?.precio.toString() ?? "");
   const [stock, setStock] = useState(producto?.stock.toString() ?? "0");
@@ -23,6 +26,11 @@ export default function FormProducto({ producto }: Props) {
   const [imagenUrl, setImagenUrl] = useState(producto?.imagenUrl ?? "");
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const desuscribir = suscribirCategorias(setCategorias);
+    return desuscribir;
+  }, []);
 
   async function guardar(event: React.FormEvent) {
     event.preventDefault();
@@ -45,6 +53,7 @@ export default function FormProducto({ producto }: Props) {
 
       const datos = {
         codigo: codigo.trim() || undefined,
+        categoriaId: categoriaId || undefined,
         nombre: nombre.trim(),
         descripcion: descripcion.trim(),
         precio: precioNumero,
@@ -104,6 +113,22 @@ export default function FormProducto({ producto }: Props) {
           Útil para identificar productos con el mismo nombre en el pedido de
           WhatsApp.
         </p>
+      </div>
+
+      <div className="campo">
+        <label htmlFor="categoria">Categoría</label>
+        <select
+          id="categoria"
+          value={categoriaId}
+          onChange={(e) => setCategoriaId(e.target.value)}
+        >
+          <option value="">Sin categoría</option>
+          {categorias.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.nombre}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="campo">

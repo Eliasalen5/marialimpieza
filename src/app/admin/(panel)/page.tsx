@@ -3,21 +3,30 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { suscribirProductos, eliminarProducto, actualizarProducto } from "@/lib/products";
-import type { Producto } from "@/lib/types";
+import { suscribirCategorias } from "@/lib/categories";
+import type { Categoria, Producto } from "@/lib/types";
 import { formatearPrecio } from "@/lib/formato";
 import ControlStock from "@/components/ControlStock";
 
 export default function PanelAdmin() {
   const [productos, setProductos] = useState<Producto[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    const desuscribir = suscribirProductos(false, (lista) => {
+    const desuscribirProductos = suscribirProductos(false, (lista) => {
       setProductos(lista);
       setCargando(false);
     });
-    return desuscribir;
+    const desuscribirCategorias = suscribirCategorias(setCategorias);
+    return () => {
+      desuscribirProductos();
+      desuscribirCategorias();
+    };
   }, []);
+
+  const nombreCategoria = (id?: string) =>
+    categorias.find((c) => c.id === id)?.nombre;
 
   async function borrar(p: Producto) {
     if (!window.confirm(`¿Eliminar el producto "${p.nombre}"?`)) return;
@@ -46,9 +55,17 @@ export default function PanelAdmin() {
             Gestiona productos y control de stock
           </p>
         </div>
-        <Link href="/admin/productos/nuevo" className="boton boton-primario">
-          + Agregar producto
-        </Link>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <Link
+            href="/admin/categorias"
+            className="boton boton-secundario"
+          >
+            + Categorías
+          </Link>
+          <Link href="/admin/productos/nuevo" className="boton boton-primario">
+            + Agregar producto
+          </Link>
+        </div>
       </div>
 
       {productos.length === 0 ? (
@@ -90,6 +107,7 @@ export default function PanelAdmin() {
                     <br />
                     <span style={{ color: "var(--texto-suave)", fontSize: 13 }}>
                       {p.codigo ? `${p.codigo} · ` : ""}
+                      {nombreCategoria(p.categoriaId) ? `${nombreCategoria(p.categoriaId)} · ` : ""}
                       {p.stock === 0 ? "Sin stock" : `${p.stock} disponibles`}
                     </span>
                   </td>

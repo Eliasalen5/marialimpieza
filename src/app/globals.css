@@ -176,7 +176,8 @@ a {
 .campo input[type="number"],
 .campo input[type="email"],
 .campo input[type="password"],
-.campo textarea {
+.campo textarea,
+.campo select {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid var(--borde);
@@ -187,7 +188,8 @@ a {
 }
 
 .campo input:focus,
-.campo textarea:focus {
+.campo textarea:focus,
+.campo select:focus {
   outline: 2px solid var(--acento);
   outline-offset: -1px;
   border-color: var(--acento);
@@ -229,6 +231,36 @@ a {
 }
 
 /* Catálogo */
+.categorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.chip-categoria {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto-suave);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.chip-categoria:hover {
+  color: var(--acento-oscuro);
+  border-color: var(--acento);
+}
+
+.chip-categoria.activo {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: #fff;
+}
+
 .rejilla-productos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
