@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/img/og.png",
+        url: "/img/og.jpg",
         width: 1200,
         height: 630,
         alt: nombreTienda,
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: nombreTienda,
     description: "Catálogo de productos de limpieza",
-    images: ["/img/og.png"],
+    images: ["/img/og.jpg"],
   },
 };
 
