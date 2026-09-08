@@ -14,12 +14,38 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Tienda Limpieza",
-  description: "Catálogo de productos de limpieza",
-};
-
 const nombreTienda = process.env.NEXT_PUBLIC_NOMBRE_TIENDA || "Tienda Limpieza";
+
+const urlSitio =
+  process.env.NEXT_PUBLIC_SITIO_URL || "https://marialimpieza.vercel.app";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(urlSitio),
+  title: nombreTienda,
+  description: "Catálogo de productos de limpieza",
+  openGraph: {
+    title: nombreTienda,
+    description: "Catálogo de productos de limpieza",
+    url: urlSitio,
+    siteName: nombreTienda,
+    locale: "es_AR",
+    type: "website",
+    images: [
+      {
+        url: "/img/og.png",
+        width: 1200,
+        height: 630,
+        alt: nombreTienda,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: nombreTienda,
+    description: "Catálogo de productos de limpieza",
+    images: ["/img/og.png"],
+  },
+};
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
