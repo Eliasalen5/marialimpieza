@@ -89,6 +89,7 @@ export default function PanelAdmin() {
                     </Link>
                     <br />
                     <span style={{ color: "var(--texto-suave)", fontSize: 13 }}>
+                      {p.codigo ? `${p.codigo} · ` : ""}
                       {p.stock === 0 ? "Sin stock" : `${p.stock} disponibles`}
                     </span>
                   </td>

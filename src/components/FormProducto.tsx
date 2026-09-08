@@ -14,6 +14,7 @@ export default function FormProducto({ producto }: Props) {
   const editando = Boolean(producto);
 
   const [nombre, setNombre] = useState(producto?.nombre ?? "");
+  const [codigo, setCodigo] = useState(producto?.codigo ?? "");
   const [descripcion, setDescripcion] = useState(producto?.descripcion ?? "");
   const [precio, setPrecio] = useState(producto?.precio.toString() ?? "");
   const [stock, setStock] = useState(producto?.stock.toString() ?? "0");
@@ -43,6 +44,7 @@ export default function FormProducto({ producto }: Props) {
       }
 
       const datos = {
+        codigo: codigo.trim() || undefined,
         nombre: nombre.trim(),
         descripcion: descripcion.trim(),
         precio: precioNumero,
@@ -87,6 +89,21 @@ export default function FormProducto({ producto }: Props) {
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
         />
+      </div>
+
+      <div className="campo">
+        <label htmlFor="codigo">Código o referencia</label>
+        <input
+          id="codigo"
+          type="text"
+          placeholder="Ej. CER-001 (opcional)"
+          value={codigo}
+          onChange={(e) => setCodigo(e.target.value)}
+        />
+        <p className="subtitulo" style={{ marginTop: 4 }}>
+          Útil para identificar productos con el mismo nombre en el pedido de
+          WhatsApp.
+        </p>
       </div>
 
       <div className="campo">

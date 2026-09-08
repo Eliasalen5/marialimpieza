@@ -10,6 +10,7 @@ import {
   urlWhatsApp,
   mensajeProductoDirecto,
   hayNumeroWhatsApp,
+  referenciaProducto,
 } from "@/lib/whatsapp";
 
 export default function Catalogo() {
@@ -59,6 +60,11 @@ export default function Catalogo() {
               )}
               <div className="info">
                 <h3>{p.nombre}</h3>
+                {referenciaProducto(p.codigo, p.id) && (
+                  <span className="producto-codigo">
+                    Código: {referenciaProducto(p.codigo, p.id)}
+                  </span>
+                )}
                 {p.descripcion && <p className="descripcion">{p.descripcion}</p>}
                 <div className="precio">{formatearPrecio(p.precio)}</div>
                 {p.stock > 0 ? (

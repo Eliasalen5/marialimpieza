@@ -34,6 +34,7 @@ function leerGuardado(): ItemCarrito[] {
     if (!Array.isArray(datos)) return [];
     return datos.map((i) => ({
       id: i.id,
+      codigo: i.codigo,
       nombre: i.nombre,
       precio: i.precio,
       imagenUrl: i.imagenUrl,
@@ -76,6 +77,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         ...prev,
         {
           id: producto.id,
+          codigo: producto.codigo,
           nombre: producto.nombre,
           precio: producto.precio,
           imagenUrl: producto.imagenUrl,

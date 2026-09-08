@@ -265,6 +265,12 @@ a {
   font-size: 16px;
 }
 
+.producto-codigo {
+  font-size: 12px;
+  color: var(--texto-suave);
+  font-weight: 600;
+}
+
 .tarjeta-producto .descripcion {
   color: var(--texto-suave);
   font-size: 13px;

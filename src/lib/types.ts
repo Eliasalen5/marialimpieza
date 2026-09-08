@@ -2,6 +2,7 @@ import type { Timestamp } from "firebase/firestore";
 
 export interface Producto {
   id: string;
+  codigo?: string;
   nombre: string;
   descripcion: string;
   precio: number;
@@ -12,6 +13,7 @@ export interface Producto {
 }
 
 export interface ProductoDatos {
+  codigo?: string;
   nombre: string;
   descripcion: string;
   precio: number;
@@ -23,6 +25,7 @@ export interface ProductoDatos {
 
 export interface ItemCarrito {
   id: string;
+  codigo?: string;
   nombre: string;
   precio: number;
   imagenUrl: string;

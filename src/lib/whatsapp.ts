@@ -6,7 +6,13 @@ const numeroWhatsApp = (process.env.NEXT_PUBLIC_WHATSAPP || "").replace(
   ""
 );
 
+const saludo = "Hola Maria, quiero encargarte";
+
 export const hayNumeroWhatsApp = numeroWhatsApp.length > 0;
+
+export function referenciaProducto(codigo?: string, id?: string): string {
+  return codigo || id || "";
+}
 
 export function urlWhatsApp(texto: string): string {
   const base =
@@ -16,18 +22,35 @@ export function urlWhatsApp(texto: string): string {
   return `${base}?text=${encodeURIComponent(texto)}`;
 }
 
+function lineaProducto(
+  nombre: string,
+  codigo: string | undefined,
+  id: string,
+  cantidad: number,
+  importe: string
+): string {
+  const ref = referenciaProducto(codigo, id);
+  const sufijo = ref ? ` (Código: ${ref})` : "";
+  return `• ${cantidad}x ${nombre}${sufijo} - ${importe}`;
+}
+
 export function mensajePedido(items: ItemCarrito[], total: number): string {
-  const lineas = items.map(
-    (i) =>
-      `• ${i.cantidad}x ${i.nombre} - ${formatearPrecio(i.precio * i.cantidad)}`
+  const lineas = items.map((i) =>
+    lineaProducto(
+      i.nombre,
+      i.codigo,
+      i.id,
+      i.cantidad,
+      formatearPrecio(i.precio * i.cantidad)
+    )
   );
-  return `Hola, quiero encargar:\n${lineas.join("\n")}\n\nTOTAL: ${formatearPrecio(
-    total
-  )}`;
+  return `${saludo}:\n${lineas.join("\n")}\n\nTOTAL: ${formatearPrecio(total)}`;
 }
 
 export function mensajeProductoDirecto(producto: Producto): string {
-  return `Hola, quiero encargar:\n• 1x ${producto.nombre} - ${formatearPrecio(
+  const ref = referenciaProducto(producto.codigo, producto.id);
+  const sufijo = ref ? ` (Código: ${ref})` : "";
+  return `${saludo}:\n• 1x ${producto.nombre}${sufijo} - ${formatearPrecio(
     producto.precio
   )}`;
 }
