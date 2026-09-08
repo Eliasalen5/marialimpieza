@@ -5,10 +5,17 @@ import Image from "next/image";
 import { suscribirProductos } from "@/lib/products";
 import type { Producto } from "@/lib/types";
 import { formatearPrecio } from "@/lib/formato";
+import { useCarrito } from "@/context/CartContext";
+import {
+  urlWhatsApp,
+  mensajeProductoDirecto,
+  hayNumeroWhatsApp,
+} from "@/lib/whatsapp";
 
 export default function Catalogo() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [cargando, setCargando] = useState(true);
+  const { agregar } = useCarrito();
 
   useEffect(() => {
     const desuscribir = suscribirProductos(true, (lista) => {
@@ -61,6 +68,25 @@ export default function Catalogo() {
                 ) : (
                   <span className="etiqueta-stock agotado">Agotado</span>
                 )}
+                <div className="card-acciones">
+                  <button
+                    className="boton boton-primario"
+                    onClick={() => agregar(p)}
+                    disabled={p.stock === 0}
+                  >
+                    {p.stock === 0 ? "Agotado" : "Agregar al carrito"}
+                  </button>
+                  {hayNumeroWhatsApp && p.stock > 0 && (
+                    <a
+                      className="boton boton-secundario"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={urlWhatsApp(mensajeProductoDirecto(p))}
+                    >
+                      Encargar
+                    </a>
+                  )}
+                </div>
               </div>
             </article>
           ))}

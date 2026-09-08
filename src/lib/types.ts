@@ -20,3 +20,12 @@ export interface ProductoDatos {
   activo: boolean;
   creadoEn: Timestamp;
 }
+
+export interface ItemCarrito {
+  id: string;
+  nombre: string;
+  precio: number;
+  imagenUrl: string;
+  cantidad: number;
+  stock: number;
+}

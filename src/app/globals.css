@@ -445,3 +445,171 @@ a {
   object-fit: cover;
   background: var(--fondo);
 }
+
+/* Boton de carrito en el header */
+.boton-carrito {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto);
+  cursor: pointer;
+  position: relative;
+}
+
+.boton-carrito:hover {
+  background: var(--fondo);
+  color: var(--acento-oscuro);
+}
+
+.badge-carrito {
+  background: var(--acento);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 11px;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+/* Drawer del carrito */
+.cortina {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 40;
+}
+
+.carrito {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(380px, 100vw);
+  background: var(--superficie);
+  z-index: 50;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
+  transform: translateX(105%);
+  transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.carrito-abierto {
+  transform: translateX(0);
+}
+
+.carrito-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.carrito-cabecera h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.carrito-vacio {
+  text-align: center;
+  color: var(--texto-suave);
+  padding: 48px 20px;
+}
+
+.carrito-lista {
+  list-style: none;
+  margin: 0;
+  padding: 12px 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.carrito-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.carrito-item:last-child {
+  border-bottom: none;
+}
+
+.carrito-imagen {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.carrito-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.carrito-item-info strong {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.carrito-item-precio {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--acento-oscuro);
+}
+
+.carrito-cantidad {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.carrito-pie {
+  border-top: 1px solid var(--borde);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.carrito-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.carrito-total strong {
+  font-size: 18px;
+}
+
+/* Acciones en las tarjetas del catalogo */
+.card-acciones {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.card-acciones .boton {
+  flex: 1;
+  padding: 9px 10px;
+  font-size: 13px;
+}
