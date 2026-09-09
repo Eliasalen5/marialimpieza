@@ -39,11 +39,7 @@ function incluyeProductos(miembros: ItemComboDetalle[]): string {
     .map((m) => {
       const ref = referenciaProducto(m.codigo, undefined);
       const sufijo = ref ? ` (Código: ${ref})` : "";
-      const importe =
-        typeof m.precio === "number"
-          ? ` - ${formatearPrecio(m.cantidad * m.precio)}`
-          : "";
-      return `   • ${m.cantidad}x ${m.nombre}${sufijo}${importe}`;
+      return `   • ${m.cantidad}x ${m.nombre}${sufijo}`;
     })
     .join("\n");
 }

@@ -78,35 +78,14 @@ export default function CartDrawer() {
                     )}
                     {item.esCombo && item.miembros && item.miembros.length > 0 && (
                       <ul className="carrito-desglose">
-                        {item.miembros.map((m, idx) => {
-                          const tienePrecio = typeof m.precio === "number";
-                          return (
-                            <li key={idx}>
-                              {m.cantidad}x {m.nombre}
-                              {m.codigo ? ` (${m.codigo})` : ""}
-                              {tienePrecio && (
-                                <span className="carrito-desglose-precio">
-                                  {formatearPrecio(m.cantidad * (m.precio ?? 0))}
-                                </span>
-                              )}
-                            </li>
-                          );
-                        })}
+                        {item.miembros.map((m, idx) => (
+                          <li key={idx}>
+                            {m.cantidad}x {m.nombre}
+                            {m.codigo ? ` (${m.codigo})` : ""}
+                          </li>
+                        ))}
                       </ul>
                     )}
-                    {item.esCombo &&
-                      item.miembros &&
-                      item.miembros.some((m) => typeof m.precio === "number") && (
-                        <span className="carrito-normal">
-                          Antes:{" "}
-                          {formatearPrecio(
-                            item.miembros.reduce(
-                              (acc, m) => acc + (m.cantidad * (m.precio ?? 0)),
-                              0
-                            ) * item.cantidad
-                          )}
-                        </span>
-                      )}
                     <span className="carrito-item-precio">
                       {formatearPrecio(item.precio * item.cantidad)}
                     </span>

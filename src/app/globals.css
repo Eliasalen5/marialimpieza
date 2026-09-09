@@ -612,14 +612,6 @@ a {
   font-weight: 600;
 }
 
-.carrito-miembros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px 8px;
-  font-size: 12px;
-  color: var(--texto-suave);
-}
-
 .carrito-desglose {
   list-style: none;
   margin: 0;
@@ -629,24 +621,6 @@ a {
   display: flex;
   flex-direction: column;
   gap: 2px;
-}
-
-.carrito-desglose li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-}
-
-.carrito-desglose-precio {
-  color: var(--texto);
-  font-weight: 600;
-}
-
-.carrito-normal {
-  font-size: 11px;
-  color: var(--texto-suave);
-  text-decoration: line-through;
 }
 
 .carrito-item-info {
