@@ -52,8 +52,8 @@ export default function FormProducto({ producto }: Props) {
       }
 
       const datos = {
-        codigo: codigo.trim() || undefined,
-        categoriaId: categoriaId || undefined,
+        ...(codigo.trim() ? { codigo: codigo.trim() } : {}),
+        ...(categoriaId ? { categoriaId } : {}),
         nombre: nombre.trim(),
         descripcion: descripcion.trim(),
         precio: precioNumero,
