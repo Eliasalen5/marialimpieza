@@ -52,6 +52,7 @@ export interface ItemComboDetalle {
   nombre: string;
   codigo?: string;
   cantidad: number;
+  precio?: number;
   imagenUrl?: string;
 }
 

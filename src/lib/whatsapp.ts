@@ -35,12 +35,17 @@ function lineaProducto(
 }
 
 function incluyeProductos(miembros: ItemComboDetalle[]): string {
-  const detalle = miembros.map((m) => {
-    const ref = referenciaProducto(m.codigo, undefined);
-    const sufijo = ref ? ` (${ref})` : "";
-    return `${m.cantidad}x ${m.nombre}${sufijo}`;
-  });
-  return `   Incluye: ${detalle.join(", ")}`;
+  return miembros
+    .map((m) => {
+      const ref = referenciaProducto(m.codigo, undefined);
+      const sufijo = ref ? ` (Código: ${ref})` : "";
+      const importe =
+        typeof m.precio === "number"
+          ? ` - ${formatearPrecio(m.cantidad * m.precio)}`
+          : "";
+      return `   • ${m.cantidad}x ${m.nombre}${sufijo}${importe}`;
+    })
+    .join("\n");
 }
 
 export function mensajePedido(items: ItemCarrito[], total: number): string {

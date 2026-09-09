@@ -86,6 +86,7 @@ export default function ComboSection({ combos, productos }: Props) {
       nombre: m.producto.nombre,
       codigo: m.producto.codigo,
       cantidad: m.cantidad,
+      precio: m.producto.precio,
       imagenUrl: m.producto.imagenUrl,
     }));
     const item: ItemCarrito = {
