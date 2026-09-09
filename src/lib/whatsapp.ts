@@ -35,13 +35,12 @@ function lineaProducto(
 }
 
 function incluyeProductos(miembros: ItemComboDetalle[]): string {
-  return miembros
-    .map((m) => {
-      const ref = referenciaProducto(m.codigo, undefined);
-      const sufijo = ref ? ` (Código: ${ref})` : "";
-      return `   • ${m.cantidad}x ${m.nombre}${sufijo}`;
-    })
-    .join("\n");
+  const detalle = miembros.map((m) => {
+    const ref = referenciaProducto(m.codigo, undefined);
+    const sufijo = ref ? ` (${ref})` : "";
+    return `${m.cantidad}x ${m.nombre}${sufijo}`;
+  });
+  return `   Incluye: ${detalle.join(", ")}`;
 }
 
 export function mensajePedido(items: ItemCarrito[], total: number): string {
