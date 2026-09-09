@@ -22,6 +22,7 @@ export default function FormCombo({ combo }: Props) {
 
   const [productos, setProductos] = useState<Producto[]>([]);
   const [nombre, setNombre] = useState(combo?.nombre ?? "");
+  const [codigo, setCodigo] = useState(combo?.codigo ?? "");
   const [descripcion, setDescripcion] = useState(combo?.descripcion ?? "");
   const [precio, setPrecio] = useState(combo?.precio.toString() ?? "");
   const [items, setItems] = useState<ItemCombo[]>(
@@ -85,6 +86,7 @@ export default function FormCombo({ combo }: Props) {
       }
 
       const datos = {
+        ...(codigo.trim() ? { codigo: codigo.trim() } : {}),
         nombre: nombre.trim(),
         descripcion: descripcion.trim(),
         precio: precioNumero,
@@ -123,6 +125,20 @@ export default function FormCombo({ combo }: Props) {
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
         />
+      </div>
+
+      <div className="campo">
+        <label htmlFor="codigo">Código o referencia</label>
+        <input
+          id="codigo"
+          type="text"
+          placeholder="Ej. CMB-001 (opcional)"
+          value={codigo}
+          onChange={(e) => setCodigo(e.target.value)}
+        />
+        <p className="subtitulo" style={{ marginTop: 4 }}>
+          Útil para identificar el combo en el pedido de WhatsApp.
+        </p>
       </div>
 
       <div className="campo">

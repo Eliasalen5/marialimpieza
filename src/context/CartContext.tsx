@@ -42,6 +42,7 @@ function leerGuardado(): ItemCarrito[] {
       cantidad: Math.max(1, i.cantidad),
       stock: Math.max(i.stock, i.cantidad),
       esCombo: i.esCombo,
+      miembros: Array.isArray(i.miembros) ? i.miembros : undefined,
     }));
   } catch {
     return [];

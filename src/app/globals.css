@@ -592,6 +592,34 @@ a {
   flex-shrink: 0;
 }
 
+.carrito-minis {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.carrito-mini {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--superficie);
+  box-shadow: var(--sombra);
+}
+
+.carrito-codigo {
+  font-size: 11px;
+  color: var(--texto-suave);
+  font-weight: 600;
+}
+
+.carrito-miembros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 8px;
+  font-size: 12px;
+  color: var(--texto-suave);
+}
+
 .carrito-item-info {
   flex: 1;
   display: flex;

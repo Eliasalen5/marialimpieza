@@ -107,6 +107,14 @@ export default function CombosAdmin() {
                     >
                       {combo.nombre}
                     </Link>
+                    {combo.codigo && (
+                      <>
+                        <br />
+                        <span style={{ color: "var(--texto-suave)", fontSize: 13 }}>
+                          {combo.codigo}
+                        </span>
+                      </>
+                    )}
                   </td>
                   <td data-etiqueta="Incluye">{nombreProductos(combo)}</td>
                   <td data-etiqueta="Precio normal">

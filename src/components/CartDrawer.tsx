@@ -30,7 +30,33 @@ export default function CartDrawer() {
             <ul className="carrito-lista">
               {items.map((item) => (
                 <li className="carrito-item" key={item.id}>
-                  {item.imagenUrl ? (
+                  {item.esCombo && item.miembros && item.miembros.length > 0 ? (
+                    <div className="carrito-minis">
+                      {item.miembros.slice(0, 3).map((m, idx) =>
+                        m.imagenUrl ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            key={`${item.id}-${idx}`}
+                            className="carrito-mini"
+                            src={m.imagenUrl}
+                            alt={m.nombre}
+                            style={
+                              idx > 0 ? { marginLeft: -14 } : undefined
+                            }
+                          />
+                        ) : (
+                          <div
+                            key={`${item.id}-${idx}`}
+                            className="carrito-mini"
+                            style={{
+                              background: "var(--fondo)",
+                              marginLeft: idx > 0 ? -14 : undefined,
+                            }}
+                          />
+                        )
+                      )}
+                    </div>
+                  ) : item.imagenUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       className="carrito-imagen"
@@ -45,6 +71,20 @@ export default function CartDrawer() {
                   )}
                   <div className="carrito-item-info">
                     <strong>{item.nombre}</strong>
+                    {item.codigo && (
+                      <span className="carrito-codigo">
+                        Código: {item.codigo}
+                      </span>
+                    )}
+                    {item.esCombo && item.miembros && item.miembros.length > 0 && (
+                      <div className="carrito-miembros">
+                        {item.miembros.map((m, idx) => (
+                          <span key={idx}>
+                            {m.cantidad}x {m.nombre}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                     <span className="carrito-item-precio">
                       {formatearPrecio(item.precio * item.cantidad)}
                     </span>

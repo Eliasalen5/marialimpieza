@@ -45,6 +45,14 @@ export interface ItemCarrito {
   cantidad: number;
   stock: number;
   esCombo?: boolean;
+  miembros?: ItemComboDetalle[];
+}
+
+export interface ItemComboDetalle {
+  nombre: string;
+  codigo?: string;
+  cantidad: number;
+  imagenUrl?: string;
 }
 
 export interface ItemCombo {
@@ -54,6 +62,7 @@ export interface ItemCombo {
 
 export interface Combo {
   id: string;
+  codigo?: string;
   nombre: string;
   descripcion: string;
   precio: number;
@@ -63,6 +72,7 @@ export interface Combo {
 }
 
 export interface ComboDatos {
+  codigo?: string;
   nombre: string;
   descripcion: string;
   precio: number;

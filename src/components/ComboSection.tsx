@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import type { Combo, ItemCarrito, Producto } from "@/lib/types";
+import type { Combo, ItemCarrito, ItemComboDetalle, Producto } from "@/lib/types";
 import { formatearPrecio } from "@/lib/formato";
 import { useCarrito } from "@/context/CartContext";
 import {
@@ -82,14 +82,22 @@ export default function ComboSection({ combos, productos }: Props) {
   }
 
   function agregar(preparado: ComboPreparado) {
+    const miembros: ItemComboDetalle[] = preparado.miembros.map((m) => ({
+      nombre: m.producto.nombre,
+      codigo: m.producto.codigo,
+      cantidad: m.cantidad,
+      imagenUrl: m.producto.imagenUrl,
+    }));
     const item: ItemCarrito = {
       id: preparado.combo.id,
+      codigo: preparado.combo.codigo,
       nombre: preparado.combo.nombre,
       esCombo: true,
       precio: preparado.combo.precio,
       imagenUrl: preparado.imagen,
       cantidad: 1,
       stock: preparado.maxCantidad,
+      miembros,
     };
     agregarCombo(item);
     abrir();
@@ -158,6 +166,9 @@ export default function ComboSection({ combos, productos }: Props) {
 
               <div className="combo-info">
                 <h3>{combo.nombre}</h3>
+                {combo.codigo && (
+                  <span className="producto-codigo">Código: {combo.codigo}</span>
+                )}
                 {combo.descripcion && <p>{combo.descripcion}</p>}
                 <div className="combo-miembros">
                   {miembros.map((m) => (
@@ -195,7 +206,16 @@ export default function ComboSection({ combos, productos }: Props) {
                     className="boton boton-secundario"
                     target="_blank"
                     rel="noopener noreferrer"
-                    href={urlWhatsApp(mensajeComboDirecto(combo))}
+                    href={urlWhatsApp(
+                      mensajeComboDirecto(
+                        combo,
+                        preparado.miembros.map((m) => ({
+                          nombre: m.producto.nombre,
+                          codigo: m.producto.codigo,
+                          cantidad: m.cantidad,
+                        }))
+                      )
+                    )}
                   >
                     Encargar
                   </a>
