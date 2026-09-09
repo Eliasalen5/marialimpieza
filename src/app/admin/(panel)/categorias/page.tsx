@@ -118,13 +118,7 @@ export default function Categorias() {
               {categorias.map((categoria) => (
                 <li
                   key={categoria.id}
-                  style={{
-                    display: "flex",
-                    gap: 10,
-                    alignItems: "center",
-                    padding: "10px 0",
-                    borderBottom: "1px solid var(--borde)",
-                  }}
+                  className="fila-categoria"
                 >
                   <input
                     type="text"

@@ -683,6 +683,176 @@ a {
   font-size: 13px;
 }
 
+.fila-categoria {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.fila-categoria input[type="text"] {
+  flex: 1;
+}
+
+/* Ajustes responsivos para dispositivos móviles */
+@media (max-width: 720px) {
+  .contenedor {
+    padding: 24px 16px;
+  }
+
+  .cabecera nav {
+    padding: 0 14px;
+    height: 56px;
+  }
+
+  .marca {
+    font-size: 16px;
+  }
+
+  .pagina-titulo {
+    margin-bottom: 18px;
+  }
+
+  .pagina-titulo h1 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carrito-texto {
+    display: none;
+  }
+
+  .boton-carrito {
+    padding: 8px 12px;
+    min-height: 42px;
+  }
+
+  .rejilla-productos {
+    grid-template-columns: 1fr;
+  }
+
+  .tarjeta-producto .info {
+    padding: 12px;
+  }
+
+  .card-acciones {
+    flex-direction: column;
+  }
+
+  .boton-flecha {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+    min-height: 44px;
+  }
+
+  .combos-cabecera h2 {
+    font-size: 18px;
+  }
+
+  .tarjeta-combo {
+    flex-basis: 86%;
+    min-width: 86%;
+    padding: 14px;
+  }
+
+  .combo-foto {
+    width: 100px;
+    height: 100px;
+  }
+
+  .combo-imagenes {
+    height: 100px;
+  }
+
+  .precio-oferta {
+    font-size: 18px;
+  }
+
+  .combo-item {
+    flex-wrap: wrap;
+  }
+
+  .combo-item select {
+    flex: 1 1 100%;
+  }
+
+  .combo-item .combo-cantidad {
+    flex: 1;
+    width: auto;
+  }
+
+  .campo,
+  .combo-cantidad input {
+    font-size: 16px;
+  }
+
+  .boton {
+    padding: 11px 14px;
+  }
+
+  .pagina-titulo > div:last-child,
+  .pagina-titulo .boton {
+    width: 100%;
+  }
+
+  .tabla tr {
+    padding: 6px;
+  }
+
+  .fila-categoria {
+    flex-wrap: wrap;
+  }
+
+  .fila-categoria input[type="text"] {
+    flex: 1 1 100%;
+  }
+
+  .carrito-lista {
+    padding: 10px 14px;
+  }
+
+  .carrito-pie {
+    padding: 14px;
+  }
+
+  .carrito-cabecera {
+    padding: 14px;
+  }
+
+  .carrito-mini {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .categorias {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .categorias::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip-categoria {
+    flex-shrink: 0;
+  }
+
+  .login-wrap {
+    margin: 24px auto;
+  }
+
+  .tarjeta {
+    padding: 18px;
+  }
+}
+
 /* Combos y ofertas */
 .combos {
   margin-bottom: 28px;
