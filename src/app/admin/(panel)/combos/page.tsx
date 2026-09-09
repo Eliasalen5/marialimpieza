@@ -54,7 +54,12 @@ export default function CombosAdmin() {
   }
 
   async function alternarActivo(combo: Combo) {
-    await actualizarCombo(combo.id, { activo: !combo.activo });
+    try {
+      await actualizarCombo(combo.id, { activo: !combo.activo });
+    } catch (error) {
+      console.error(error);
+      window.alert("No se pudo actualizar el combo.");
+    }
   }
 
   if (cargando) {

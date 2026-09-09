@@ -33,7 +33,8 @@ const almacen = () => {
 
 export function suscribirProductos(
   soloActivos: boolean,
-  callback: (productos: Producto[]) => void
+  callback: (productos: Producto[]) => void,
+  onError?: (error: Error) => void
 ): () => void {
   const ref = soloActivos
     ? query(collection(baseDeDatos(), COLECCION), where("activo", "==", true))
@@ -53,7 +54,10 @@ export function suscribirProductos(
       });
       callback(lista);
     },
-    (error) => console.error("Error leyendo productos:", error)
+    (error) => {
+      console.error("Error leyendo productos:", error);
+      onError?.(error);
+    }
   );
 }
 

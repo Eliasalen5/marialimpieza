@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { deleteField } from "firebase/firestore";
 import { crearProducto, actualizarProducto, subirImagen, nuevoProductoDatos } from "@/lib/products";
 import { suscribirCategorias } from "@/lib/categories";
-import type { Categoria, Producto } from "@/lib/types";
+import type { Categoria, Producto, ProductoDatos } from "@/lib/types";
 
 interface Props {
   producto?: Producto;
@@ -63,7 +64,15 @@ export default function FormProducto({ producto }: Props) {
       };
 
       if (editando && producto) {
-        await actualizarProducto(producto.id, datos);
+        const cambios = {
+          ...datos,
+          ...(codigo.trim() ? {} : { codigo: deleteField() }),
+          ...(categoriaId ? {} : { categoriaId: deleteField() }),
+        };
+        await actualizarProducto(
+          producto.id,
+          cambios as unknown as Partial<ProductoDatos>
+        );
       } else {
         await crearProducto(nuevoProductoDatos(datos));
       }

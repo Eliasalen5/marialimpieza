@@ -39,7 +39,12 @@ export default function PanelAdmin() {
   }
 
   async function alternarActivo(p: Producto) {
-    await actualizarProducto(p.id, { activo: !p.activo });
+    try {
+      await actualizarProducto(p.id, { activo: !p.activo });
+    } catch (error) {
+      console.error(error);
+      window.alert("No se pudo actualizar el producto.");
+    }
   }
 
   if (cargando) {

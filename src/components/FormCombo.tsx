@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { deleteField } from "firebase/firestore";
 import { suscribirProductos } from "@/lib/products";
 import {
   crearCombo,
@@ -9,7 +10,7 @@ import {
   nuevoComboDatos,
   esComboDatosValido,
 } from "@/lib/combos";
-import type { Combo, ItemCombo, Producto } from "@/lib/types";
+import type { Combo, ItemCombo, Producto, ComboDatos } from "@/lib/types";
 import { formatearPrecio } from "@/lib/formato";
 
 interface Props {
@@ -33,7 +34,7 @@ export default function FormCombo({ combo }: Props) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const desuscribir = suscribirProductos(true, setProductos);
+    const desuscribir = suscribirProductos(false, setProductos);
     return desuscribir;
   }, []);
 
@@ -95,7 +96,14 @@ export default function FormCombo({ combo }: Props) {
       };
 
       if (editando && combo) {
-        await actualizarCombo(combo.id, datos);
+        const cambios = {
+          ...datos,
+          ...(codigo.trim() ? {} : { codigo: deleteField() }),
+        };
+        await actualizarCombo(
+          combo.id,
+          cambios as unknown as Partial<ComboDatos>
+        );
       } else {
         await crearCombo(nuevoComboDatos(datos));
       }
@@ -166,11 +174,18 @@ export default function FormCombo({ combo }: Props) {
                 }
               >
                 <option value="">Elegí un producto…</option>
+                {item.productoId &&
+                  !productos.some((p) => p.id === item.productoId) && (
+                    <option value={item.productoId}>
+                      {item.productoId} (producto eliminado)
+                    </option>
+                  )}
                 {productos
                   .filter((p) => !usados.includes(p.id))
                   .map((p) => (
                     <option key={p.id} value={p.id}>
                       {p.nombre}
+                      {p.activo ? "" : " (oculto)"}
                     </option>
                   ))}
               </select>

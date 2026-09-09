@@ -1036,3 +1036,24 @@ a {
   font-size: 14px;
   text-align: center;
 }
+/* Panel admin */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--borde, #e2e8f0);
+  background: #fff;
+}
+
+.admin-marca {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+@media (max-width: 480px) {
+  .admin-marca {
+    font-size: 14px;
+  }
+}

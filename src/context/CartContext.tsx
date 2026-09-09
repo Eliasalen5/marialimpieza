@@ -33,17 +33,20 @@ function leerGuardado(): ItemCarrito[] {
     if (!guardado) return [];
     const datos = JSON.parse(guardado) as ItemCarrito[];
     if (!Array.isArray(datos)) return [];
-    return datos.map((i) => ({
-      id: i.id,
-      codigo: i.codigo,
-      nombre: i.nombre,
-      precio: i.precio,
-      imagenUrl: i.imagenUrl,
-      cantidad: Math.max(1, i.cantidad),
-      stock: Math.max(i.stock, i.cantidad),
-      esCombo: i.esCombo,
-      miembros: Array.isArray(i.miembros) ? i.miembros : undefined,
-    }));
+    return datos.map((i) => {
+      const cantidad = Math.max(1, Math.floor(Number(i.cantidad) || 1));
+      return {
+        id: i.id,
+        codigo: i.codigo,
+        nombre: i.nombre,
+        precio: Number(i.precio) || 0,
+        imagenUrl: i.imagenUrl,
+        cantidad,
+        stock: Math.max(Number(i.stock) || 0, cantidad),
+        esCombo: i.esCombo,
+        miembros: Array.isArray(i.miembros) ? i.miembros : undefined,
+      };
+    });
   } catch {
     return [];
   }

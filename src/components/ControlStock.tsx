@@ -10,10 +10,16 @@ interface Props {
 
 export default function ControlStock({ productoId, stock }: Props) {
   const [valor, setValor] = useState(stock);
+  const [stockAnterior, setStockAnterior] = useState(stock);
   const [guardando, setGuardando] = useState(false);
 
+  if (stockAnterior !== stock) {
+    setStockAnterior(stock);
+    setValor(stock);
+  }
+
   async function guardar(nuevo: number) {
-    const cantidad = Math.max(0, Math.round(nuevo));
+    const cantidad = Math.max(0, Math.round(Number.isFinite(nuevo) ? nuevo : 0));
     setValor(cantidad);
     setGuardando(true);
     try {

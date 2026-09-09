@@ -22,13 +22,24 @@ export default function Catalogo() {
   const [combos, setCombos] = useState<Combo[]>([]);
   const [categoriaActiva, setCategoriaActiva] = useState<string | null>(null);
   const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState("");
   const { agregar } = useCarrito();
 
   useEffect(() => {
-    const desuscribirProductos = suscribirProductos(true, (lista) => {
-      setProductos(lista);
-      setCargando(false);
-    });
+    const desuscribirProductos = suscribirProductos(
+      true,
+      (lista) => {
+        setProductos(lista);
+        setCargando(false);
+      },
+      (err) => {
+        console.error(err);
+        setCargando(false);
+        setError(
+          "No se pudo cargar el catálogo. Chequeá tu conexión o las reglas de Firestore."
+        );
+      }
+    );
     const desuscribirCategorias = suscribirCategorias(setCategorias);
     const desuscribirCombos = suscribirCombos(true, setCombos);
     return () => {
@@ -44,6 +55,14 @@ export default function Catalogo() {
 
   if (cargando) {
     return <div className="cargando">Cargando catálogo…</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="contenedor">
+        <div className="aviso aviso-error">{error}</div>
+      </div>
+    );
   }
 
   return (

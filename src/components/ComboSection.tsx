@@ -43,12 +43,13 @@ export default function ComboSection({ combos, productos }: Props) {
     const visibles = miembros.length === combo.items.length;
     const preciosNormales = miembros.map((m) => m.producto.precio * m.cantidad);
     const precioNormal = preciosNormales.reduce((a, b) => a + b, 0);
-    const maxCantidad = visibles
-      ? Math.max(
-          0,
-          Math.min(...miembros.map((m) => Math.floor(m.producto.stock / m.cantidad)))
-        )
-      : 0;
+    const maxCantidad =
+      visibles && miembros.length > 0
+        ? Math.max(
+            0,
+            Math.min(...miembros.map((m) => Math.floor(m.producto.stock / m.cantidad)))
+          )
+        : 0;
     const agotado = !visibles || maxCantidad === 0;
 
     return {

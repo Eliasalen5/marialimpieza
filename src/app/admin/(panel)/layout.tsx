@@ -9,7 +9,7 @@ export default function PanelLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, cargando } = useAuth();
+  const { user, cargando, cerrarSesion } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -26,5 +26,22 @@ export default function PanelLayout({
     return null;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <header className="admin-header">
+        <span className="admin-marca">Panel de administración</span>
+        <button
+          type="button"
+          className="boton-icono"
+          onClick={async () => {
+            await cerrarSesion();
+            router.replace("/admin/login");
+          }}
+        >
+          Salir
+        </button>
+      </header>
+      {children}
+    </>
+  );
 }

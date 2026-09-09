@@ -7,17 +7,19 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { onAuthStateChanged, type User } from "firebase/auth";
+import { onAuthStateChanged, signOut, type User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 interface AuthContextValue {
   user: User | null;
   cargando: boolean;
+  cerrarSesion: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
   user: null,
   cargando: true,
+  cerrarSesion: async () => {},
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -33,8 +35,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return desuscribir;
   }, []);
 
+  const cerrarSesion = async () => {
+    if (!auth) return;
+    await signOut(auth);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, cargando }}>
+    <AuthContext.Provider value={{ user, cargando, cerrarSesion }}>
       {children}
     </AuthContext.Provider>
   );
