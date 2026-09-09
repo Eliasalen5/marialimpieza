@@ -62,6 +62,9 @@ export default function PanelAdmin() {
           >
             + Categorías
           </Link>
+          <Link href="/admin/combos" className="boton boton-secundario">
+            + Combos
+          </Link>
           <Link href="/admin/productos/nuevo" className="boton boton-primario">
             + Agregar producto
           </Link>

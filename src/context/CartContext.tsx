@@ -15,6 +15,7 @@ interface CarritoContextValue {
   total: number;
   abierto: boolean;
   agregar: (producto: Producto) => void;
+  agregarCombo: (item: ItemCarrito) => void;
   quitar: (id: string) => void;
   cambiarCantidad: (id: string, cantidad: number) => void;
   vaciar: () => void;
@@ -40,6 +41,7 @@ function leerGuardado(): ItemCarrito[] {
       imagenUrl: i.imagenUrl,
       cantidad: Math.max(1, i.cantidad),
       stock: Math.max(i.stock, i.cantidad),
+      esCombo: i.esCombo,
     }));
   } catch {
     return [];
@@ -88,6 +90,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   }
 
+  function agregarCombo(item: ItemCarrito) {
+    setItems((prev) => {
+      const existente = prev.find((i) => i.id === item.id);
+      if (existente) {
+        return prev.map((i) =>
+          i.id === item.id
+            ? { ...i, cantidad: Math.min(i.cantidad + 1, item.stock) }
+            : i
+        );
+      }
+      return [{ ...item, cantidad: 1 }, ...prev];
+    });
+  }
+
   function quitar(id: string) {
     setItems((prev) => prev.filter((i) => i.id !== id));
   }
@@ -116,6 +132,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         total,
         abierto,
         agregar,
+        agregarCombo,
         quitar,
         cambiarCantidad,
         vaciar,

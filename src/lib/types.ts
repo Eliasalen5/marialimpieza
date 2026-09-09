@@ -44,4 +44,29 @@ export interface ItemCarrito {
   imagenUrl: string;
   cantidad: number;
   stock: number;
+  esCombo?: boolean;
+}
+
+export interface ItemCombo {
+  productoId: string;
+  cantidad: number;
+}
+
+export interface Combo {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  items: ItemCombo[];
+  activo: boolean;
+  creadoEn: Timestamp;
+}
+
+export interface ComboDatos {
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  items: ItemCombo[];
+  activo: boolean;
+  creadoEn: Timestamp;
 }

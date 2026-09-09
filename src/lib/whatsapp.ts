@@ -1,4 +1,4 @@
-import type { ItemCarrito, Producto } from "@/lib/types";
+import type { Combo, ItemCarrito, Producto } from "@/lib/types";
 import { formatearPrecio } from "@/lib/formato";
 
 const numeroWhatsApp = (process.env.NEXT_PUBLIC_WHATSAPP || "").replace(
@@ -52,5 +52,12 @@ export function mensajeProductoDirecto(producto: Producto): string {
   const sufijo = ref ? ` (Código: ${ref})` : "";
   return `${saludo}:\n• 1x ${producto.nombre}${sufijo} - ${formatearPrecio(
     producto.precio
+  )}`;
+}
+
+export function mensajeComboDirecto(combo: Combo): string {
+  const ref = referenciaProducto(undefined, combo.id);
+  return `${saludo}:\n• 1x ${combo.nombre} (Código: ${ref}) - ${formatearPrecio(
+    combo.precio
   )}`;
 }

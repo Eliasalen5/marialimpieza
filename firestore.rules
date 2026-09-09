@@ -21,5 +21,12 @@ service cloud.firestore {
       // Escritura solo del admin
       allow create, update, delete: if esAdmin();
     }
+
+    match /combos/{id} {
+      // Lectura pública para el catálogo
+      allow read: if true;
+      // Escritura solo del admin
+      allow create, update, delete: if esAdmin();
+    }
   }
 }

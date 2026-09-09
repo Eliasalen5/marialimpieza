@@ -651,3 +651,187 @@ a {
   padding: 9px 10px;
   font-size: 13px;
 }
+
+/* Combos y ofertas */
+.combos {
+  margin-bottom: 28px;
+}
+
+.combos-cabecera {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.combos-cabecera h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.combos-flechas {
+  display: flex;
+  gap: 8px;
+}
+
+.boton-flecha {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--borde);
+  background: var(--superficie);
+  color: var(--texto);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.boton-flecha:hover:not(:disabled) {
+  background: var(--fondo);
+  color: var(--acento-oscuro);
+}
+
+.boton-flecha:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.combos-carrusel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.combos-carrusel::-webkit-scrollbar {
+  display: none;
+}
+
+.tarjeta-combo {
+  flex: 0 0 calc((100% - 32px) / 3);
+  min-width: 260px;
+  max-width: 360px;
+  scroll-snap-align: start;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .tarjeta-combo {
+    flex-basis: 82%;
+    min-width: 82%;
+  }
+}
+
+.combo-imagenes {
+  display: flex;
+  align-items: center;
+  height: 120px;
+}
+
+.combo-foto {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid var(--superficie);
+  box-shadow: var(--sombra);
+}
+
+.combo-info h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.combo-info p {
+  margin: 4px 0 0;
+  color: var(--texto-suave);
+  font-size: 13px;
+}
+
+.combo-miembros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.combo-miembro {
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.combo-precios {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.precio-normal {
+  color: var(--texto-suave);
+  font-size: 14px;
+  text-decoration: line-through;
+}
+
+.precio-oferta {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--acento-oscuro);
+}
+
+/* Formulario de combos */
+.campo-label-bloque {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.combo-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.combo-item select {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.combo-item .combo-cantidad {
+  flex-shrink: 0;
+  width: 90px;
+}
+
+.combo-item .combo-cantidad input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}

@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { suscribirProductos } from "@/lib/products";
 import { suscribirCategorias } from "@/lib/categories";
-import type { Categoria, Producto } from "@/lib/types";
+import { suscribirCombos } from "@/lib/combos";
+import type { Categoria, Combo, Producto } from "@/lib/types";
 import { formatearPrecio } from "@/lib/formato";
 import { useCarrito } from "@/context/CartContext";
 import {
@@ -13,31 +14,30 @@ import {
   hayNumeroWhatsApp,
   referenciaProducto,
 } from "@/lib/whatsapp";
+import ComboSection from "@/components/ComboSection";
 
 export default function Catalogo() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [combos, setCombos] = useState<Combo[]>([]);
   const [categoriaActiva, setCategoriaActiva] = useState<string | null>(null);
-  const [productosCargados, setProductosCargados] = useState(false);
-  const [categoriasCargadas, setCategoriasCargadas] = useState(false);
+  const [cargando, setCargando] = useState(true);
   const { agregar } = useCarrito();
 
   useEffect(() => {
     const desuscribirProductos = suscribirProductos(true, (lista) => {
       setProductos(lista);
-      setProductosCargados(true);
+      setCargando(false);
     });
-    const desuscribirCategorias = suscribirCategorias((lista) => {
-      setCategorias(lista);
-      setCategoriasCargadas(true);
-    });
+    const desuscribirCategorias = suscribirCategorias(setCategorias);
+    const desuscribirCombos = suscribirCombos(true, setCombos);
     return () => {
       desuscribirProductos();
       desuscribirCategorias();
+      desuscribirCombos();
     };
   }, []);
 
-  const cargando = !productosCargados;
   const visibles = categoriaActiva
     ? productos.filter((p) => p.categoriaId === categoriaActiva)
     : productos;
@@ -55,7 +55,9 @@ export default function Catalogo() {
         </div>
       </div>
 
-      {categoriasCargadas && categorias.length > 0 && (
+      <ComboSection combos={combos} productos={productos} />
+
+      {categorias.length > 0 && (
         <div className="categorias" role="tablist" aria-label="Filtrar por categoría">
           <button
             type="button"
